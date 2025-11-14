@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#B0BEC5">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        app:titleTextColor="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/rounded_gradient"
+            android:orientation="horizontal"
+            android:layout_below="@+id/toolbar"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/stockbrain_logo"
+                android:layout_gravity="center" />
+
+
+            <TextView
+                android:id="@+id/txtNombreTienda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion1"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/inventario"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/inventory"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crear productos"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion2"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/seccion1"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/btn_lista_productos"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/supplies"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista productos"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion3"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/seccion1"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/gestion_de_ventas"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/sell"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gestión de ventas"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion4"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/seccion1"
+            android:layout_toRightOf="@+id/seccion1"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/alertas_notificaciones"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/notifications"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alertas y notificaciones"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textSize="12sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion5"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/seccion3"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/soporte"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/info"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soporte"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/seccion6"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_below="@+id/seccion3"
+            android:layout_toRightOf="@+id/seccion3"
+            android:background="@drawable/fondo_bordes_redondos">
+
+            <ImageButton
+                android:id="@+id/informe"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/analytics"
+                android:scaleType="fitCenter">
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/txtSeccion6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informe"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="12sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_bajo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@+id/seccion6"
+            android:gravity="center"
+            android:background="@drawable/borde_redondo_arriba"
+            android:layout_marginTop="50dp">
+
+            <ImageButton
+                android:id="@+id/inicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home"
+                android:layout_marginRight="60dp"
+                android:background="#FFFFFF">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/ajustes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/settings"
+                android:layout_marginRight="60dp"
+                android:background="#FFFFFF">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logout"
+                android:layout_marginRight="60dp"
+                android:background="#FFFFFF">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/more"
+                android:background="#FFFFFF">
+            </ImageButton>
+
+        </LinearLayout>
+
+</RelativeLayout>

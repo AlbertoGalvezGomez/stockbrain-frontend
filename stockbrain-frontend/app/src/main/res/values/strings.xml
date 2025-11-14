@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">StockBrain</string>
+    <string name="has_olvidado_tu_constrasenya"><u>¿Has olvidado tu constraseña?</u></string>
+    <string name="no_tienes_una_cuenta_registrate">¿No tienes una cuenta? <u>Regístrate</u></string>
+    <string name="agregar_producto_nuevo">1. Ve a la pestaña \'Inventario\'\n2. Pulsa el botón flotante \'+\' (abajo a la derecha)\n3. Rellena nombre, cantidad, precio, categoría y fecha de caducidad (opcional)\n4. Pulsa \'Guardar\'</string>
+</resources>

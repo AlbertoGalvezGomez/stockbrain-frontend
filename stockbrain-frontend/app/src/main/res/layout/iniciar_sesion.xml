@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        app:titleTextColor="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:layout_below="@+id/toolbar"
+        android:src="@drawable/stockbrain_logo">
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/layout_rectangulo"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="400dp"
+        android:background="#B0BEC5">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_menu"
+        android:orientation="vertical"
+        android:background="@drawable/fondo_bordes_redondos"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:layout_below="@+id/imgLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¡Bienvenido!"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:minHeight="48dp">
+        </EditText>
+
+        <EditText
+            android:id="@+id/editContrasenya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Contraseña"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:minHeight="48dp">
+        </EditText>
+
+        <Button
+            android:id="@+id/btnIniciarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iniciar sesión"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp">
+        </Button>
+
+        <TextView
+            android:id="@+id/txtHasOlvidadoTuContrasenya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/has_olvidado_tu_constrasenya"
+            android:gravity="center"
+            android:textColor="#B0BEC5"
+            android:layout_marginTop="10dp">
+        </TextView>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

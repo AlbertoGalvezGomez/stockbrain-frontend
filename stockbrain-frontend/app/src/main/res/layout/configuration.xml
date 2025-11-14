@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradient">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF"
+        app:titleTextColor="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- CABECERA -->
+            <TextView
+                android:id="@+id/tv_settings_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajustes"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:paddingBottom="12dp" />
+
+            <!-- CUENTA Y PERFIL -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta y perfil"
+                android:textStyle="bold"
+                android:textColor="#B0BEC5"
+                android:paddingTop="8dp"
+                android:paddingBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre de usuario"
+                        android:textSize="16sp"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tv_user_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="correo@ejemplo.com"
+                        android:textSize="14sp"
+                        android:textColor="#B0BEC5" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_edit_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Editar perfil" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cambiar contraseña / PIN"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#00BCD4"
+                android:layout_marginTop="8dp" />
+
+            <!-- NOTIFICACIONES -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2E2E2E"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notificaciones"
+                android:textStyle="bold"
+                android:textColor="#B0BEC5"
+                android:paddingBottom="6dp" />
+
+            <!-- Switches -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:divider="?android:attr/listDivider"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Notificaciones push"
+                        android:textColor="#FFFFFF" />
+
+                    <Switch
+                        android:id="@+id/switch_push"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:thumbTint="#673AB7"
+                        android:trackTint="#B0BEC5" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- COPIA DE SEGURIDAD -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2E2E2E"
+                android:layout_marginVertical="16dp" />
+
+            <!-- AYUDA Y SOPORTE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ayuda y soporte"
+                android:textStyle="bold"
+                android:textColor="#B0BEC5"
+                android:paddingBottom="6dp" />
+
+            <Button
+                android:id="@+id/btn_faq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Centro de ayuda / FAQ"
+                android:backgroundTint="#00BCD4"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/soporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contactar soporte"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="#00BCD4"
+                android:textColor="#FFFFFF" />
+
+            <!-- ELIMINAR CUENTA -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#2E2E2E"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gestión de cuenta"
+                android:textStyle="bold"
+                android:textColor="#B0BEC5"
+                android:paddingBottom="6dp" />
+
+            <Button
+                android:id="@+id/btn_delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eliminar cuenta"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/colorAlert"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- MENÚ INFERIOR -->
+    <LinearLayout
+        android:id="@+id/menu_bajo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/borde_redondo_arriba">
+
+        <ImageButton
+            android:id="@+id/inicio"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/home"
+            android:layout_marginHorizontal="12dp"
+            android:background="#FFFFFF"/>
+
+        <ImageButton
+            android:id="@+id/ajustes"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/settings"
+            android:layout_marginHorizontal="12dp"
+            android:background="#FFFFFF"/>
+
+        <ImageButton
+            android:id="@+id/logout"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/logout"
+            android:layout_marginHorizontal="12dp"
+            android:background="#FFFFFF"/>
+
+        <ImageButton
+            android:id="@+id/more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/more"
+            android:layout_marginHorizontal="12dp"
+            android:background="#FFFFFF"/>
+    </LinearLayout>
+</LinearLayout>

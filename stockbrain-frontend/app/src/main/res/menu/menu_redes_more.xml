@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_github"
+        android:title="GitHub"
+        android:icon="@android:drawable/ic_menu_myplaces" />
+
+    <item
+        android:id="@+id/action_twitter"
+        android:title="X (Twitter)"
+        android:icon="@android:drawable/ic_menu_info_details" />
+
+    <item
+        android:id="@+id/action_feedback"
+        android:title="Enviar Feedback"
+        android:icon="@android:drawable/ic_menu_send" />
+
+</menu>
