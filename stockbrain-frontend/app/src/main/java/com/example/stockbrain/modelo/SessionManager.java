@@ -3,75 +3,78 @@ package com.example.stockbrain.modelo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.appcompat.app.AlertDialog;
+
 import com.example.stockbrain.logica.InicioSesion;
+import com.example.stockbrain.logica.MainActivity;
 
 public class SessionManager {
-
     private static final String PREF_NAME = "data_login";
-    private static final String KEY_USER_ID = "user_id";
-    private static final String KEY_USER_EMAIL = "user_email";
-    private static final String KEY_ROL = "rol";
+    private final SharedPreferences prefs;
 
-    private static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    public SessionManager(Context context) {
+        prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    // === CERRAR SESIÓN ===
-    public static void logout(Context context) {
-        logout(context, false);
+    public boolean estaLogueado() {
+        return prefs.getLong("user_id", 0L) != 0L;
     }
 
-    public static void logout(Context context, boolean showDialog) {
-        if (showDialog) {
-            new AlertDialog.Builder(context)
-                    .setTitle("Cerrar Sesión")
-                    .setMessage("¿Estás seguro de que quieres cerrar sesión?")
-                    .setPositiveButton("Sí", (dialog, which) -> performLogout(context))
-                    .setNegativeButton("No", null)
-                    .show();
-        } else {
-            performLogout(context);
+    public Long getUserId() {
+        return prefs.getLong("user_id", 0L);
+    }
+
+    public String getNombre() {
+        return prefs.getString("user_nombre", "Usuario");
+    }
+
+    public String getEmail() {
+        return prefs.getString("user_email", "");
+    }
+
+    public String getRol() {
+        return prefs.getString("rol", "");
+    }
+
+    public Long getTiendaId() {
+        return prefs.getLong("tienda_id", 0L);
+    }
+
+    public void logout(Context context) {
+        prefs.edit().clear().apply();
+        context.startActivity(new Intent(context, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+    }
+
+    public void guardarNombre(String nombre) {
+        prefs.edit().putString("user_nombre", nombre).apply();
+    }
+
+    public void guardarEmail(String email) {
+        prefs.edit().putString("user_email", email).apply();
+    }
+
+    public void guardarUsuarioLogueado(Long id, String nombre, String email, String rol, Long tiendaId) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("user_id", id != null ? id : 0L);
+        editor.putString("user_nombre", nombre);
+        editor.putString("user_email", email);
+        editor.putString("rol", rol);
+
+        if (tiendaId != null) {
+            editor.putLong("tienda_id", tiendaId);
+            editor.putString("store_id", String.valueOf(tiendaId));
         }
+
+        editor.apply();
     }
 
-    private static void performLogout(Context context) {
-        getPrefs(context).edit().clear().apply();
-
-        Intent intent = new Intent(context, InicioSesion.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
-
-        if (context instanceof android.app.Activity) {
-            ((android.app.Activity) context).finishAffinity(); // Cierra todas
-        }
+    public void guardarTienda(Long tiendaId, String nombreTienda) {
+        prefs.edit()
+                .putLong("tienda_id", tiendaId)
+                .putString("store_id", String.valueOf(tiendaId))
+                .putString("nombre_tienda", nombreTienda)
+                .apply();
     }
-
-    // === VERIFICAR SESIÓN ===
-    public static boolean isLoggedIn(Context context) {
-        return getUserId(context) != null;
-    }
-
-    public static boolean isAdmin(Context context) {
-        return "ADMIN".equals(getRol(context));
-    }
-
-    public static boolean isUser(Context context) {
-        return "USER".equals(getRol(context));
-    }
-
-    // === OBTENER DATOS ===
-    public static Long getUserId(Context context) {
-        String id = getPrefs(context).getString(KEY_USER_ID, null);
-        return id != null ? Long.parseLong(id) : null;
-    }
-
-    public static String getUserEmail(Context context) {
-        return getPrefs(context).getString(KEY_USER_EMAIL, "");
-    }
-
-    public static String getRol(Context context) {
-        return getPrefs(context).getString(KEY_ROL, null);
-    }
-
 }

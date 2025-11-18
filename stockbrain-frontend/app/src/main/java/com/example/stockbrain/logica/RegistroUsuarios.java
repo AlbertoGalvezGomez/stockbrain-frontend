@@ -1,9 +1,7 @@
 package com.example.stockbrain.logica;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
+import com.example.stockbrain.modelo.SessionManager;
 import com.example.stockbrain.modelo.Usuario;
 
 import retrofit2.Call;
@@ -30,31 +29,36 @@ public class RegistroUsuarios extends AppCompatActivity {
     private Button btnRegistrar;
     private Spinner rolSpinner;
     private String selectedRole;
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrarse);
 
+        sessionManager = new SessionManager(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Crear cuenta");
         }
 
+        inicializarVistas();
+        configurarSpinner();
+        btnRegistrar.setOnClickListener(v -> registrarUsuario());
+    }
+
+    private void inicializarVistas() {
         nombre = findViewById(R.id.editNombreUsuario);
         email = findViewById(R.id.editEmail);
         password = findViewById(R.id.editContrasenya);
         btnRegistrar = findViewById(R.id.btnRegistrarse);
         rolSpinner = findViewById(R.id.rolSpinner);
+    }
 
+    private void configurarSpinner() {
         String[] roles = {"Soy vendedor", "Soy cliente"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, roles);
@@ -72,8 +76,6 @@ public class RegistroUsuarios extends AppCompatActivity {
                 selectedRole = null;
             }
         });
-
-        btnRegistrar.setOnClickListener(v -> registrarUsuario());
     }
 
     private void registrarUsuario() {
@@ -82,17 +84,22 @@ public class RegistroUsuarios extends AppCompatActivity {
         String passwordUsuario = password.getText().toString().trim();
 
         if (nombreUsuario.isEmpty() || emailUsuario.isEmpty() || passwordUsuario.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (selectedRole == null) {
-            Toast.makeText(this, "Selecciona un rol", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Selecciona si eres vendedor o cliente", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String rolSeleccionado = selectedRole.equals("Soy vendedor") ? "ADMIN" : "USER";
-        Usuario usuarioNuevo = new Usuario(nombreUsuario, emailUsuario, passwordUsuario, rolSeleccionado);
+        String rolBackend = selectedRole.equals("Soy vendedor") ? "ADMIN" : "USER";
+
+        Usuario usuarioNuevo = new Usuario();
+        usuarioNuevo.setNombre(nombreUsuario);
+        usuarioNuevo.setEmail(emailUsuario);
+        usuarioNuevo.setPassword(passwordUsuario);
+        usuarioNuevo.setRol(rolBackend);
 
         ApiService api = ApiClient.getClient(this).create(ApiService.class);
         Call<Usuario> call = api.crearUsuario(usuarioNuevo);
@@ -100,52 +107,43 @@ public class RegistroUsuarios extends AppCompatActivity {
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if (response.isSuccessful()) {
-                    Usuario usuario = response.body();
-                    if (usuario != null) {
-                        Long idUsuario = usuario.getId();
-                        if (idUsuario != null) {
-                            SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
-                            prefs.edit()
-                                    .putString("user_id", String.valueOf(idUsuario))
-                                    .putString("rol", rolSeleccionado)
-                                    .putString("user_email", emailUsuario)
-                                    .apply();
+                if (response.isSuccessful() && response.body() != null) {
+                    Usuario usuarioCreado = response.body();
 
-                            Log.d("REGISTRO", "¡ÉXITO! ID guardado: " + idUsuario + " | Rol: " + rolSeleccionado);
+                    sessionManager.guardarUsuarioLogueado(
+                            usuarioCreado.getId(),
+                            usuarioCreado.getNombre(),
+                            usuarioCreado.getEmail(),
+                            rolBackend,
+                            null
+                    );
 
-                            Toast.makeText(RegistroUsuarios.this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroUsuarios.this, "¡Cuenta creada con éxito!", Toast.LENGTH_LONG).show();
 
-                            Intent intent = rolSeleccionado.equals("ADMIN")
-                                    ? new Intent(RegistroUsuarios.this, CrearTienda.class)
-                                    : new Intent(RegistroUsuarios.this, ListaTiendas.class);
+                    Intent intent = rolBackend.equals("ADMIN")
+                            ? new Intent(RegistroUsuarios.this, CrearTienda.class)
+                            : new Intent(RegistroUsuarios.this, ListaTiendas.class);
 
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Log.e("REGISTRO", "¡ERROR! Usuario sin ID: " + (usuario.getEmail() != null ? usuario.getEmail() : "desconocido"));
-                            Toast.makeText(RegistroUsuarios.this, "Error: El servidor no asignó un ID", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Log.e("REGISTRO", "¡ERROR! Response body null");
-                        Toast.makeText(RegistroUsuarios.this, "Error: Respuesta vacía del servidor", Toast.LENGTH_SHORT).show();
-                    }
+                    startActivity(intent);
+                    finish();
+
                 } else {
-                    try {
-                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Desconocido";
-                        Log.e("REGISTRO", "Error HTTP " + response.code() + ": " + errorBody);
-                        Toast.makeText(RegistroUsuarios.this, "Error: " + errorBody, Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Log.e("REGISTRO", "Error parsing error body: " + e.getMessage());
-                        Toast.makeText(RegistroUsuarios.this, "Error del servidor: " + response.code(), Toast.LENGTH_LONG).show();
-                    }
+                    String msg = response.code() == 400 ? "Email ya registrado" :
+                            response.code() == 500 ? "Error del servidor" : "Error al registrarse";
+                    Toast.makeText(RegistroUsuarios.this, msg, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(RegistroUsuarios.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistroUsuarios.this, "Sin conexión", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -9,9 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
-    //private static final String BASE_URL = "http://192.168.1.133:8080/";
-
+    private static final String BASE_URL = "http://10.0.2.2:8080/"; // o tu IP real
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient(Context context) {
@@ -23,16 +21,17 @@ public class ApiClient {
                         }
 
                         SharedPreferences prefs = context.getSharedPreferences("data_login", Context.MODE_PRIVATE);
-                        String userId = prefs.getString("user_id", "");
+
+                        long userId = prefs.getLong("user_id", 0L);
+                        String userIdStr = userId != 0L ? String.valueOf(userId) : "";
+
                         String email = prefs.getString("user_email", "");
 
-                        Request original = chain.request();
-                        Request.Builder requestBuilder = original.newBuilder()
-                                .header("X-User-ID", userId)
+                        Request.Builder requestBuilder = chain.request().newBuilder()
+                                .header("X-User-ID", userIdStr)
                                 .header("X-User-Email", email);
 
-                        Request request = requestBuilder.build();
-                        return chain.proceed(request);
+                        return chain.proceed(requestBuilder.build());
                     })
                     .build();
 

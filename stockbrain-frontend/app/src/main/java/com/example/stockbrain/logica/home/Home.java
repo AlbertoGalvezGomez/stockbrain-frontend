@@ -1,7 +1,6 @@
 package com.example.stockbrain.logica.home;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,19 +16,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.stockbrain.R;
 import com.example.stockbrain.logica.Configuration;
-import com.example.stockbrain.logica.MainActivity;
+import com.example.stockbrain.logica.InicioSesion;
 import com.example.stockbrain.modelo.SessionManager;
 
 public class Home extends AppCompatActivity {
 
-    private static final String TAG = "Home";
-
     private TextView txtNombreTienda;
-    private ImageButton btnInventario, btnListaProductos, btnVentas;
-    private ImageButton btnAlertas, btnSoporte, btnInforme;
-    private ImageButton btnInicio, btnAjustes, btnInfo, btnLogout, btnMore;
-    private Long userId;
-    private String userEmail;
+    private ImageButton btnInventario, btnListaProductos, btnSoporte, btnMore, btnAjustes, btnLogout;
+
+    private SessionManager sessionManager;
+
     private static final String EMAIL_SOPORTE = "agalgom316@g.educaand.com";
     private static final String TELEFONO_SOPORTE = "34642330037";
 
@@ -38,251 +34,151 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("StockBrain");
-        }
+        sessionManager = new SessionManager(this);
 
-        if (!validarSesionAdmin()) {
+        if (!sessionManager.estaLogueado()) {
+            redirigirALogin();
+            return;
+        }
+        if (!"ADMIN".equalsIgnoreCase(sessionManager.getRol())) {
+            Toast.makeText(this, "Solo los administradores pueden acceder", Toast.LENGTH_LONG).show();
+            sessionManager.logout(this);
             return;
         }
 
         inicializarVistas();
-
-        gestorClicks();
-
+        configurarToolbar();
+        cargarDatosUsuario();
+        configurarClicks();
     }
 
-    private boolean validarSesionAdmin() {
-        SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
-        String rol = prefs.getString("rol", null);
-        userId = Long.parseLong(prefs.getString("user_id", "0"));
-        userEmail = prefs.getString("user_email", "");
-
-        if (userId == 0 || !"ADMIN".equals(rol)) {
-            Toast.makeText(this, "Acceso denegado", Toast.LENGTH_SHORT).show();
-            SessionManager.logout(this);
-            return false;
-        }
-        return true;
-    }
-
-    private void inicializarVistas() {
+    private void configurarToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Gestión de Inventario");
+            getSupportActionBar().setTitle("StockBrain");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
+    }
 
+    private void cargarDatosUsuario() {
+        txtNombreTienda.setText("Bienvenido, " + sessionManager.getNombre());
+    }
+
+    private void inicializarVistas() {
         txtNombreTienda = findViewById(R.id.txtNombreTienda);
 
         btnInventario = findViewById(R.id.inventario);
         btnListaProductos = findViewById(R.id.btn_lista_productos);
-        btnVentas = findViewById(R.id.gestion_de_ventas);
-        btnAlertas = findViewById(R.id.alertas_notificaciones);
         btnSoporte = findViewById(R.id.soporte);
-        btnInforme = findViewById(R.id.informe);
-        btnInicio = findViewById(R.id.inicio);
+        btnMore = findViewById(R.id.more);
         btnAjustes = findViewById(R.id.ajustes);
         btnLogout = findViewById(R.id.logout);
-        btnMore = findViewById(R.id.more);
-
-        txtNombreTienda = findViewById(R.id.txtNombreTienda);
     }
 
-    private void gestorClicks() {
-        btnInventario.setOnClickListener(v -> mostrarInventario());
+    private void configurarClicks() {
+        btnInventario.setOnClickListener(v -> startActivity(new Intent(this, HomeCrearProductos.class)));
+        btnListaProductos.setOnClickListener(v -> startActivity(new Intent(this, HomeListaProductos.class)));
         btnSoporte.setOnClickListener(v -> mostrarSoporte());
+        btnAjustes.setOnClickListener(v -> startActivity(new Intent(this, Configuration.class)));
         btnMore.setOnClickListener(this::mostrarPopupMenu);
-        btnLogout.setOnClickListener(v -> cerrarSesion());
-        btnAjustes.setOnClickListener(v -> mostrarAjustes());
-        btnListaProductos.setOnClickListener(v -> mostrarListaProductos());
+        btnLogout.setOnClickListener(v -> confirmarLogout());
     }
 
-    private void mostrarAjustes() {
-        startActivity(new Intent(Home.this, Configuration.class));
-    }
-
-    private void mostrarDialogoLogout() {
-        new androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle("Cerrar Sesión")
+    private void confirmarLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
                 .setMessage("¿Estás seguro de que quieres cerrar sesión?")
-                .setPositiveButton("Sí", (dialog, which) -> SessionManager.logout(this))
-                .setNegativeButton("No", null)
+                .setPositiveButton("Sí", (d, w) -> sessionManager.logout(this))
+                .setNegativeButton("Cancelar", null)
                 .show();
     }
 
-    private void mostrarInventario(){
-        startActivity(new Intent(Home.this, HomeCrearProductos.class));
-    }
-
-    private void mostrarListaProductos(){
-        startActivity(new Intent(Home.this, HomeListaProductos.class));
+    private void redirigirALogin() {
+        startActivity(new Intent(this, InicioSesion.class));
+        finish();
     }
 
     private void mostrarSoporte() {
-        String[] opciones = {"Enviar Email", "Contactar (WhatsApp/Teléfono)"};
-
+        String[] opciones = {"Enviar Email", "WhatsApp / Teléfono"};
         new AlertDialog.Builder(this)
-                .setTitle("¿Cómo te ayudamos?")
-                .setItems(opciones, (dialog, which) -> {
-                    if (which == 0) {
-                        abrirEmail();
-                    } else if (which == 1) {
-                        mostrarOpcionesContacto();
-                    }
+                .setTitle("Soporte")
+                .setItems(opciones, (d, w) -> {
+                    if (w == 0) abrirEmail();
+                    else mostrarOpcionesContacto();
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
-    public void cerrarSesion() {
-        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(Home.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-
-        finish();
-    }
-
-    // FUNCIONES SOPORTE
     private void mostrarOpcionesContacto() {
-        String[] opciones = {"Llamar al soporte", "WhatsApp", "SMS"};
-
+        String[] opciones = {"Llamar", "WhatsApp", "SMS"};
         new AlertDialog.Builder(this)
-                .setTitle("Contactar")
-                .setItems(opciones, (dialog, which) -> {
-                    if (which == 0) {
-                        llamarSoporte();
-                    } else if (which == 1) {
-                        abrirWhatsApp();
-                    } else if (which == 2) {
-                        enviarSMS();
-                    }
+                .setItems(opciones, (d, w) -> {
+                    if (w == 0) llamarSoporte();
+                    else if (w == 1) abrirWhatsApp();
+                    else enviarSMS();
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
     private void abrirEmail() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud de soporte - StockBrain");
-        intent.putExtra(Intent.EXTRA_TEXT,
-                "Hola equipo,\n\nEstoy teniendo un problema con...\n\n" +
-                        "Versión de la app: 1.0\n" +
-                        "Dispositivo: " + Build.MODEL + "\n" +
-                        "Android: " + Build.VERSION.RELEASE + "\n\nGracias.");
-
+        Intent i = new Intent(Intent.ACTION_SEND).setType("message/rfc822")
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE})
+                .putExtra(Intent.EXTRA_SUBJECT, "Soporte StockBrain")
+                .putExtra(Intent.EXTRA_TEXT, "Hola,\n\nNecesito ayuda con...\n\nDispositivo: " + Build.MODEL +
+                        "\nAndroid: " + Build.VERSION.RELEASE);
         try {
-            startActivity(Intent.createChooser(intent, "Enviar correo con..."));
+            startActivity(Intent.createChooser(i, "Enviar correo"));
         } catch (Exception e) {
-            mostrarError("No hay apps de correo");
+            Toast.makeText(this, "No hay app de correo", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void llamarSoporte() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + TELEFONO_SOPORTE));
-        startActivity(intent);
+        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + TELEFONO_SOPORTE)));
     }
 
     private void abrirWhatsApp() {
-        String mensaje = "Hola, necesito soporte con la app de StockBrain.";
-
-        String url = "https://wa.me/" + TELEFONO_SOPORTE + "?text=" + Uri.encode(mensaje);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-
-        intent.setPackage("com.whatsapp");
-
+        String texto = "Hola, necesito soporte con StockBrain";
+        String url = "https://wa.me/" + TELEFONO_SOPORTE + "?text=" + Uri.encode(texto);
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         try {
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-
-                Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(Intent.createChooser(webIntent, "Abrir WhatsApp"));
-            }
+            startActivity(i);
         } catch (Exception e) {
-            mostrarError("WhatsApp no está instalado");
+            Toast.makeText(this, "WhatsApp no instalado", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void enviarSMS() {
-        String mensaje = "Hola, necesito ayuda con la app de StockBrain.";
-
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("smsto:" + TELEFONO_SOPORTE));
-        intent.putExtra("sms_body", mensaje);
-
+        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + TELEFONO_SOPORTE));
+        i.putExtra("sms_body", "Hola, necesito ayuda con StockBrain");
         try {
-            startActivity(Intent.createChooser(intent, "Enviar SMS con..."));
+            startActivity(i);
         } catch (Exception e) {
-            mostrarError("No se puede enviar SMS");
+            Toast.makeText(this, "No se puede enviar SMS", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void mostrarError(String mensaje) {
-        new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage(mensaje)
-                .setPositiveButton("OK", null)
-                .show();
-    }
-
-    // TRES PUNTOS
-    private void mostrarPopupMenu(View anchor) {
-        PopupMenu popup = new PopupMenu(this, anchor);
+    private void mostrarPopupMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
         popup.getMenuInflater().inflate(R.menu.menu_redes_more, popup.getMenu());
-
         popup.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
-
-            if (id == R.id.action_github) {
-                abrirUrl("https://github.com/AlbertoGalvezGomez");
-                return true;
-            }
-            if (id == R.id.action_twitter) {
-                abrirUrl("https://x.com/AlbertoGlv57501");
-                return true;
-            }
-            if (id == R.id.action_feedback) {
-                enviarFeedback();
-                return true;
-            }
-
-            return false;
+            if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
+            else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
+            else if (id == R.id.action_feedback) abrirEmail(); // reutilizamos el mismo
+            return true;
         });
-
         popup.show();
     }
 
     private void abrirUrl(String url) {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(Intent.createChooser(intent, "Abrir con..."));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
         } catch (Exception e) {
-            mostrarError("No se pudo abrir el enlace");
+            Toast.makeText(this, "Error al abrir enlace", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private void enviarFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE});
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback - " + getString(R.string.app_name));
-        intent.putExtra(Intent.EXTRA_TEXT, "Hola,\n\nTengo una sugerencia:\n\n");
-
-        try {
-            startActivity(Intent.createChooser(intent, "Enviar feedback"));
-        } catch (Exception e) {
-            mostrarError("No hay apps de correo");
-        }
-    }
-
 }

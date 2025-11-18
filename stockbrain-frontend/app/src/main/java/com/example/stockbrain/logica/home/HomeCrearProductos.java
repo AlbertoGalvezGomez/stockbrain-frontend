@@ -2,7 +2,6 @@ package com.example.stockbrain.logica.home;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,29 +20,30 @@ import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
 import com.example.stockbrain.modelo.Producto;
+import com.example.stockbrain.modelo.SessionManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import java.io.*;
 
 public class HomeCrearProductos extends AppCompatActivity {
 
-    private static final String TAG = "HomeInventario";
+    private static final String TAG = "HomeCrearProductos";
 
     private LinearLayout linearLayout1, linearLayout2;
     private ImageView imgPreview;
     private EditText editNombre, editStock, editPrecio, editDescripcion;
     private Button btnAgregar, btnSeleccionar, btnGuardar;
     private Uri imagenUri;
+    private SessionManager sessionManager;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) abrirGaleria();
-                else Toast.makeText(this, "Permiso denegado", Toast.LENGTH_LONG).show();
+                else Toast.makeText(this, "Permiso denegado para leer imágenes", Toast.LENGTH_LONG).show();
             });
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher =
@@ -59,11 +59,20 @@ public class HomeCrearProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_inventario);
 
+        sessionManager = new SessionManager(this);
+
+        // Protección básica
+        if (!sessionManager.estaLogueado()) {
+            startActivity(new Intent(this, com.example.stockbrain.logica.InicioSesion.class));
+            finish();
+            return;
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Crear productos");
+            getSupportActionBar().setTitle("Crear producto");
         }
 
         inicializarVistas();
@@ -88,12 +97,6 @@ public class HomeCrearProductos extends AppCompatActivity {
         btnAgregar.setOnClickListener(v -> activarLayout2());
         btnSeleccionar.setOnClickListener(v -> seleccionarImagen());
         btnGuardar.setOnClickListener(v -> guardarProducto());
-    }
-
-    private void activarLayout1() {
-        linearLayout1.setVisibility(View.VISIBLE);
-        linearLayout2.setVisibility(View.GONE);
-        limpiarFormulario();
     }
 
     private void activarLayout2() {
@@ -124,7 +127,7 @@ public class HomeCrearProductos extends AppCompatActivity {
         String precioStr = editPrecio.getText().toString().trim();
 
         if (nombre.isEmpty() || stockStr.isEmpty() || precioStr.isEmpty()) {
-            Toast.makeText(this, "Completa los campos obligatorios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nombre, stock y precio son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -134,17 +137,15 @@ public class HomeCrearProductos extends AppCompatActivity {
             stock = Integer.parseInt(stockStr);
             precio = Double.parseDouble(precioStr);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Stock y precio deben ser números", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Stock y precio deben ser números válidos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
-        String tiendaIdStr = prefs.getString("store_id", null);
-        if (tiendaIdStr == null) {
-            Toast.makeText(this, "Error: tienda no encontrada", Toast.LENGTH_SHORT).show();
+        Long tiendaId = sessionManager.getTiendaId();
+        if (tiendaId == null || tiendaId == 0L) {
+            Toast.makeText(this, "Error: no tienes tienda asignada", Toast.LENGTH_LONG).show();
             return;
         }
-        Long tiendaId = Long.parseLong(tiendaIdStr);
 
         MultipartBody.Part imagenPart = null;
         if (imagenUri != null) {
@@ -166,19 +167,19 @@ public class HomeCrearProductos extends AppCompatActivity {
                 .enqueue(new Callback<Producto>() {
                     @Override
                     public void onResponse(Call<Producto> call, Response<Producto> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            Toast.makeText(HomeCrearProductos.this, "Producto creado", Toast.LENGTH_SHORT).show();
-                            activarLayout1();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(HomeCrearProductos.this, "¡Producto creado!", Toast.LENGTH_LONG).show();
+                            limpiarFormulario();
+                            linearLayout1.setVisibility(View.VISIBLE);
+                            linearLayout2.setVisibility(View.GONE);
                         } else {
-                            Log.e(TAG, "Error HTTP: " + response.code() + " - " + response.message());
-                            Toast.makeText(HomeCrearProductos.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeCrearProductos.this, "Error al crear producto", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Producto> call, Throwable t) {
-                        Log.e(TAG, "Fallo de red: " + t.getMessage());
-                        Toast.makeText(HomeCrearProductos.this, "Sin conexión", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeCrearProductos.this, "Error de conexión", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -186,13 +187,10 @@ public class HomeCrearProductos extends AppCompatActivity {
     private File comprimirImagen(Uri uri) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            File file = new File(getCacheDir(), "img_" + System.currentTimeMillis() + ".jpg");
-
+            File file = new File(getCacheDir(), "producto_" + System.currentTimeMillis() + ".jpg");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            int calidad = 80;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, calidad, baos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
 
-            // Si > 2MB, reduce calidad
             if (baos.size() > 2 * 1024 * 1024) {
                 baos.reset();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
@@ -201,31 +199,9 @@ public class HomeCrearProductos extends AppCompatActivity {
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baos.toByteArray());
             fos.close();
-
-            Log.d(TAG, "Imagen comprimida: " + (baos.size() / 1024) + " KB");
             return file;
         } catch (Exception e) {
             Log.e(TAG, "Error comprimiendo imagen", e);
-            return copiarUriACache(uri); // fallback seguro
-        }
-    }
-
-    private File copiarUriACache(Uri uri) {
-        try {
-            File file = new File(getCacheDir(), "img_" + System.currentTimeMillis() + ".jpg");
-            InputStream in = getContentResolver().openInputStream(uri);
-            FileOutputStream out = new FileOutputStream(file);
-
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = in.read(buffer)) > 0) {
-                out.write(buffer, 0, length);
-            }
-            out.close();
-            in.close();
-            return file;
-        } catch (Exception e) {
-            Log.e(TAG, "Error copiando imagen", e);
             return null;
         }
     }
