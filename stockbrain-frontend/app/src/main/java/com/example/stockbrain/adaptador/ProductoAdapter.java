@@ -15,13 +15,11 @@ import java.util.List;
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> {
 
-    private List<Producto> productos = new ArrayList<>();  // ← Ahora inicializado
+    private List<Producto> productos = new ArrayList<>();
 
     public ProductoAdapter() {
-        // Constructor vacío (más cómodo para usar desde Activity)
     }
 
-    // Constructor opcional si quieres pasarle una lista al crear
     public ProductoAdapter(List<Producto> productos) {
         this.productos = productos != null ? productos : new ArrayList<>();
     }
@@ -41,7 +39,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         holder.tvPrecio.setText(String.format("Precio: $%.2f", p.getPrecio()));
         holder.tvStock.setText("Stock: " + p.getStock());
 
-        // Carga segura de imagen
         String imagenUrl = p.getImagenUrl();
         if (imagenUrl != null && !imagenUrl.isEmpty()) {
             Glide.with(holder.itemView.getContext())
@@ -60,7 +57,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         return productos.size();
     }
 
-    // MÉTODO CLAVE: para actualizar la lista desde la Activity
     public void setProductos(List<Producto> nuevosProductos) {
         this.productos.clear();
         if (nuevosProductos != null) {
@@ -69,10 +65,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    // Bonus: método para añadir un producto (útil si agregas uno nuevo)
     public void agregarProducto(Producto producto) {
         if (producto != null) {
-            productos.add(0, producto);  // lo pone arriba
+            productos.add(0, producto);
             notifyItemInserted(0);
         }
     }

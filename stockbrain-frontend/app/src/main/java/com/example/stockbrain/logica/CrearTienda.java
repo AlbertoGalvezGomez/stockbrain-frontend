@@ -38,7 +38,6 @@ public class CrearTienda extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        // === PROTECCIÓN: si no está logueado o no es ADMIN → fuera ===
         if (!sessionManager.estaLogueado()) {
             Toast.makeText(this, "Debes iniciar sesión", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, InicioSesion.class));

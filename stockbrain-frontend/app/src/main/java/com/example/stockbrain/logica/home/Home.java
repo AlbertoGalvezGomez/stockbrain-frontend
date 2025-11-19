@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.stockbrain.R;
-import com.example.stockbrain.logica.Configuration;
+import com.example.stockbrain.logica.Ajustes;
 import com.example.stockbrain.logica.InicioSesion;
 import com.example.stockbrain.modelo.SessionManager;
 
@@ -80,7 +80,7 @@ public class Home extends AppCompatActivity {
         btnInventario.setOnClickListener(v -> startActivity(new Intent(this, HomeCrearProductos.class)));
         btnListaProductos.setOnClickListener(v -> startActivity(new Intent(this, HomeListaProductos.class)));
         btnSoporte.setOnClickListener(v -> mostrarSoporte());
-        btnAjustes.setOnClickListener(v -> startActivity(new Intent(this, Configuration.class)));
+        btnAjustes.setOnClickListener(v -> startActivity(new Intent(this, Ajustes.class)));
         btnMore.setOnClickListener(this::mostrarPopupMenu);
         btnLogout.setOnClickListener(v -> confirmarLogout());
     }
@@ -168,7 +168,7 @@ public class Home extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
             else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
-            else if (id == R.id.action_feedback) abrirEmail(); // reutilizamos el mismo
+            else if (id == R.id.action_feedback) abrirEmail();
             return true;
         });
         popup.show();

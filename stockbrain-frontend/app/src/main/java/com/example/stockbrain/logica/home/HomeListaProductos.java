@@ -12,6 +12,7 @@ import com.example.stockbrain.R;
 import com.example.stockbrain.adaptador.ProductoAdapter;  // ← Crea este adapter si no existe
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
+import com.example.stockbrain.logica.InicioSesion;
 import com.example.stockbrain.modelo.Producto;
 import com.example.stockbrain.modelo.SessionManager;
 import retrofit2.Call;
@@ -25,7 +26,7 @@ public class HomeListaProductos extends AppCompatActivity {
     private static final String TAG = "ListaProductosTienda";
 
     private RecyclerView recyclerViewProductos;
-    private ProductoAdapter productoAdapter;  // ← Nuevo adapter para productos
+    private ProductoAdapter productoAdapter;
     private SessionManager sessionManager;
 
     @Override
@@ -35,9 +36,8 @@ public class HomeListaProductos extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        // Solo usuarios logueados (USER o ADMIN pueden ver sus productos)
         if (!sessionManager.estaLogueado()) {
-            startActivity(new Intent(this, com.example.stockbrain.logica.InicioSesion.class));
+            startActivity(new Intent(this, InicioSesion.class));
             finish();
             return;
         }
@@ -49,7 +49,7 @@ public class HomeListaProductos extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        recyclerViewProductos = findViewById(R.id.recyclerViewProductos); // ← ID del RecyclerView
+        recyclerViewProductos = findViewById(R.id.recyclerViewProductos);
         recyclerViewProductos.setLayoutManager(new LinearLayoutManager(this));
 
         productoAdapter = new ProductoAdapter(new ArrayList<>());

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.stockbrain.R;
 
-public class Configuration extends AppCompatActivity {
+public class Ajustes extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView tvUsername, tvUserEmail;

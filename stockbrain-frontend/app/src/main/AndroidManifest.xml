@@ -62,7 +62,7 @@
             android:parentActivityName=".logica.MainActivity">
         </activity>
 
-        <activity android:name=".logica.Configuration"
+        <activity android:name=".logica.Ajustes"
             android:exported="true"
             android:parentActivityName=".logica.MainActivity">
         </activity>

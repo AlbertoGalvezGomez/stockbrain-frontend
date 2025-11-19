@@ -22,14 +22,11 @@ public class Usuario {
     @SerializedName("message")
     private String message;
 
-    // Campo SOLO para registro (no se recibe nunca en login)
     @SerializedName("password")
     private String password;
 
-    // Constructor vacío
     public Usuario() {}
 
-    // Constructor para registro (con password)
     public Usuario(String nombre, String email, String password, String rol) {
         this.nombre = nombre;
         this.email = email;
@@ -37,7 +34,6 @@ public class Usuario {
         this.rol = rol;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -55,7 +51,6 @@ public class Usuario {
 
     public String getMessage() { return message; }
 
-    // Solo para registro
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 }
