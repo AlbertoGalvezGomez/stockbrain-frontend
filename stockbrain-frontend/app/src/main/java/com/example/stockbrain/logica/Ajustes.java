@@ -62,7 +62,7 @@ public class Ajustes extends AppCompatActivity {
 
     private void loadUserData() {
         SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
-        String nombre = prefs.getString("user_name", "Usuario");
+        String nombre = prefs.getString("user_nombre", "Usuario");
         String email = prefs.getString("user_email", "email@ejemplo.com");
 
         tvUsername.setText(nombre);

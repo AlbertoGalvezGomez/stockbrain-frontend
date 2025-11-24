@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/imgProducto"
@@ -52,5 +53,13 @@
                 android:textColor="#757575"
                 android:layout_marginTop="2dp"/>
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_edit_producto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Editar perfil" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

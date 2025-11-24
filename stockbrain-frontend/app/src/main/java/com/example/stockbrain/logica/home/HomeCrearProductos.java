@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
+import com.example.stockbrain.logica.InicioSesion;
 import com.example.stockbrain.modelo.Producto;
 import com.example.stockbrain.modelo.SessionManager;
 import okhttp3.MediaType;
@@ -61,9 +62,8 @@ public class HomeCrearProductos extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        // Protección básica
         if (!sessionManager.estaLogueado()) {
-            startActivity(new Intent(this, com.example.stockbrain.logica.InicioSesion.class));
+            startActivity(new Intent(this, InicioSesion.class));
             finish();
             return;
         }

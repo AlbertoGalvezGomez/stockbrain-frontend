@@ -12,6 +12,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -59,6 +60,20 @@ public interface ApiService {
             @Part("tiendaId") RequestBody tiendaId
     );
 
+    @Multipart
+    @PUT("productos/{id}")
+    Call<Producto> actualizarProducto(
+            @Path("id") Long id,
+            @Part("nombre") RequestBody nombre,
+            @Part("precio") RequestBody precio,
+            @Part("stock") RequestBody stock,
+            @Part(value = "descripcion") RequestBody descripcion,
+            @Part MultipartBody.Part imagen
+    );
+
     @GET("/productos/tienda/{tiendaId}")
     Call<List<Producto>> obtenerProductosPorTienda(@Path("tiendaId") Long tiendaId);
+
+    @DELETE("productos/{id}")
+    Call<Void> eliminarProducto(@Path("id") Long id);
 }

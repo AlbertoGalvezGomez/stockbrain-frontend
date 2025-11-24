@@ -22,7 +22,8 @@ import com.example.stockbrain.modelo.SessionManager;
 public class Home extends AppCompatActivity {
 
     private TextView txtNombreTienda;
-    private ImageButton btnInventario, btnListaProductos, btnSoporte, btnMore, btnAjustes, btnLogout;
+    private ImageButton btnInventario, btnListaProductos, btnSoporte, btnMore, btnAjustes,
+            btnLogout, btnVentas;
 
     private SessionManager sessionManager;
 
@@ -74,6 +75,7 @@ public class Home extends AppCompatActivity {
         btnMore = findViewById(R.id.more);
         btnAjustes = findViewById(R.id.ajustes);
         btnLogout = findViewById(R.id.logout);
+        btnVentas = findViewById(R.id.gestion_de_ventas);
     }
 
     private void configurarClicks() {
@@ -83,6 +85,7 @@ public class Home extends AppCompatActivity {
         btnAjustes.setOnClickListener(v -> startActivity(new Intent(this, Ajustes.class)));
         btnMore.setOnClickListener(this::mostrarPopupMenu);
         btnLogout.setOnClickListener(v -> confirmarLogout());
+        btnVentas.setOnClickListener(v -> startActivity(new Intent(this, HomeVentas.class)));
     }
 
     private void confirmarLogout() {

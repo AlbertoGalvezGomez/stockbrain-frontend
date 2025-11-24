@@ -76,6 +76,18 @@
             android:exported="true"
             android:parentActivityName=".logica.MainActivity">
         </activity>
+
+        <activity android:name=".logica.home.HomeVentas"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
+
+        <activity android:name=".logica.home.HomeEditarProducto"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
+
+
     </application>
 
 </manifest>
