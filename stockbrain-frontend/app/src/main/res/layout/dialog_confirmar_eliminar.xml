@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Para confirmar la eliminación permanente de tu cuenta, escribe la palabra:"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ELIMINAR"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#FF5252"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/et_confirmar_texto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escribe aquí..."
+        android:inputType="textCapCharacters"
+        android:imeOptions="actionDone"/>
+
+</LinearLayout>

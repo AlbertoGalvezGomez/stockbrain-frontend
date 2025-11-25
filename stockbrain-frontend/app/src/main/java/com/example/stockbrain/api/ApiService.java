@@ -46,6 +46,9 @@ public interface ApiService {
     @GET("usuarios/{id}")
     Call<Usuario> getUsuario(@Path("id") Long id);
 
+    @DELETE("usuarios/{id}")
+    Call<Void> eliminarUsuario(@Path("id") Long id);
+
     @GET("tiendas/usuario/{userId}")
     Call<Tienda> obtenerTiendaDeUsuario(@Path("userId") Long userId);
 

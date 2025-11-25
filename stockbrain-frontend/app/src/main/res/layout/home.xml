@@ -250,51 +250,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/menu_bajo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_below="@+id/seccion6"
-            android:gravity="center"
-            android:background="@drawable/borde_redondo_arriba"
-            android:layout_marginTop="50dp">
-
-            <ImageButton
-                android:id="@+id/inicio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:layout_marginRight="60dp"
-                android:background="#FFFFFF">
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/ajustes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/settings"
-                android:layout_marginRight="60dp"
-                android:background="#FFFFFF">
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logout"
-                android:layout_marginRight="60dp"
-                android:background="#FFFFFF">
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/more"
-                android:background="#FFFFFF">
-            </ImageButton>
-
-        </LinearLayout>
+    <include
+        android:id="@+id/barra_navegacion"
+        layout="@layout/barra_navegacion"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
