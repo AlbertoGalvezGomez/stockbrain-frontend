@@ -17,7 +17,6 @@ import com.example.stockbrain.logica.home.Home;
 import com.example.stockbrain.modelo.SessionManager;
 import com.example.stockbrain.modelo.Tienda;
 import com.example.stockbrain.modelo.TiendaRequest;
-import com.example.stockbrain.modelo.Usuario;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +84,6 @@ public class CrearTienda extends AppCompatActivity {
         }
 
         Long userId = sessionManager.getUserId();
-
         TiendaRequest request = new TiendaRequest(nombre, ubicacion, userId);
 
         ApiService api = ApiClient.getClient(this).create(ApiService.class);
@@ -94,48 +92,37 @@ public class CrearTienda extends AppCompatActivity {
             public void onResponse(Call<Tienda> call, Response<Tienda> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Tienda tienda = response.body();
-                    Long tiendaId = tienda.getId();
-                    String nombreTienda = tienda.getNombre();
 
-                    Log.d(TAG, "Tienda creada → ID: " + tiendaId + " | " + nombreTienda);
+                    sessionManager.guardarTienda(tienda.getId(), tienda.getNombre());
 
-                    sessionManager.guardarTienda(tiendaId, nombreTienda);
+                    Toast.makeText(CrearTienda.this, "¡Tienda creada con éxito!", Toast.LENGTH_LONG).show();
+                    irAlHome();
 
-                    asignarTiendaAlUsuario(userId, tiendaId);
                 } else {
-                    Toast.makeText(CrearTienda.this, "Error al crear la tienda", Toast.LENGTH_SHORT).show();
+                    // Mensajes más claros según el código HTTP
+                    String mensaje;
+                    switch (response.code()) {
+                        case 400:
+                            mensaje = "Datos inválidos o ya tienes una tienda";
+                            break;
+                        case 403:
+                            mensaje = "No tienes permiso para crear una tienda";
+                            break;
+                        case 404:
+                            mensaje = "Usuario no encontrado";
+                            break;
+                        default:
+                            mensaje = "Error del servidor: " + response.code();
+                            break;
+                    }
+                    Toast.makeText(CrearTienda.this, mensaje, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Tienda> call, Throwable t) {
-                Log.e(TAG, "Error de red: " + t.getMessage());
+                Log.e(TAG, "Error de red", t);
                 Toast.makeText(CrearTienda.this, "Sin conexión", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void asignarTiendaAlUsuario(Long userId, Long tiendaId) {
-        Usuario usuarioActualizado = new Usuario();
-        usuarioActualizado.setTiendaId(tiendaId);
-
-        ApiService api = ApiClient.getClient(this).create(ApiService.class);
-        api.actualizarUsuario(userId, usuarioActualizado).enqueue(new Callback<Usuario>() {
-            @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "Tienda asignada al usuario correctamente");
-                    Toast.makeText(CrearTienda.this, "¡Tienda creada y asignada!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(CrearTienda.this, "Tienda creada, pero no se pudo asignar", Toast.LENGTH_LONG).show();
-                }
-                irAlHome();
-            }
-
-            @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(CrearTienda.this, "Tienda creada (sin asignar)", Toast.LENGTH_LONG).show();
-                irAlHome();
             }
         });
     }
@@ -150,4 +137,7 @@ public class CrearTienda extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    // ELIMINA COMPLETAMENTE ESTE MÉTODO → YA NO SE USA NUNCA
+    // private void asignarTiendaAlUsuario(...) { ... }
 }
