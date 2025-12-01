@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AlertDialog;
-
 import com.example.stockbrain.logica.InicioSesion;
 import com.example.stockbrain.logica.MainActivity;
 

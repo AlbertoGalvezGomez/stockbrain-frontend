@@ -1,5 +1,6 @@
 package com.example.stockbrain.api;
 
+import com.example.stockbrain.modelo.Alerta;
 import com.example.stockbrain.modelo.UsuarioRequest;
 import com.example.stockbrain.modelo.Producto;
 import com.example.stockbrain.modelo.TiendaRequest;
@@ -88,5 +89,8 @@ public interface ApiService {
 
     @POST("ventas")
     Call<Void> crearVenta(@Body VentaRequest ventaRequest);
+
+    @GET("alertas/tienda/{tiendaId}")
+    Call<List<Alerta>> obtenerAlertas(@Path("tiendaId") Long tiendaId);
 
 }

@@ -80,7 +80,13 @@ public class Ajustes extends AppCompatActivity {
             Intent intent = new Intent(Ajustes.this, EditarPerfil.class);
             startActivityForResult(intent, 100);
         });
-        btnHome.setOnClickListener(v -> startActivity(new Intent(this, Home.class)));
+        btnHome.setOnClickListener(v -> {
+            if (sessionManager.getRol().equalsIgnoreCase("ADMIN")) {
+                startActivity(new Intent(this, Home.class));
+            } else {
+                startActivity(new Intent(this, ListaTiendas.class));
+            }
+        });
         btnLogout.setOnClickListener(v -> confirmarLogout());
         btnMore.setOnClickListener(this::mostrarPopupMenu);
     }

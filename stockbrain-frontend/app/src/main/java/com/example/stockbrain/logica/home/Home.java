@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
 
     private TextView txtNombreTienda;
     private ImageButton btnInventario, btnListaProductos, btnSoporte, btnMore, btnAjustes,
-            btnLogout, btnVentas;
+            btnLogout, btnVentas, btnAlertas;
 
     private SessionManager sessionManager;
 
@@ -76,6 +76,7 @@ public class Home extends AppCompatActivity {
         btnAjustes = findViewById(R.id.ajustes);
         btnLogout = findViewById(R.id.logout);
         btnVentas = findViewById(R.id.gestion_de_ventas);
+        btnAlertas = findViewById(R.id.alertas_notificaciones);
     }
 
     private void configurarClicks() {
@@ -86,6 +87,7 @@ public class Home extends AppCompatActivity {
         btnMore.setOnClickListener(this::mostrarPopupMenu);
         btnLogout.setOnClickListener(v -> confirmarLogout());
         btnVentas.setOnClickListener(v -> startActivity(new Intent(this, HomeVentas.class)));
+        btnAlertas.setOnClickListener(v -> startActivity(new Intent(this, HomeAlertas.class)));
     }
 
     private void confirmarLogout() {

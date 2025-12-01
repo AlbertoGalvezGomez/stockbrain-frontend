@@ -24,7 +24,6 @@ public class VentaRequest {
         this.tienda = tienda;
     }
 
-    // Getters y setters
     public int getCantidad() { return cantidad; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public String getFecha() { return fecha; }
