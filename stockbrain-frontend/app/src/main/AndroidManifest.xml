@@ -77,17 +77,25 @@
             android:parentActivityName=".logica.MainActivity">
         </activity>
 
-        <activity android:name=".logica.home.HomeVentas"
-            android:exported="true"
-            android:parentActivityName=".logica.MainActivity">
-        </activity>
-
         <activity android:name=".logica.home.HomeEditarProducto"
             android:exported="true"
             android:parentActivityName=".logica.MainActivity">
         </activity>
 
+        <activity android:name=".logica.EditarPerfil"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
+
+        <activity android:name=".logica.home.HomeVentas"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
+
+        <activity android:name=".logica.home.HomeProductosVender"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
 
     </application>
-
 </manifest>

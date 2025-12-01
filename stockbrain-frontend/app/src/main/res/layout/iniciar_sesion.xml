@@ -83,16 +83,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp">
         </Button>
-
-        <TextView
-            android:id="@+id/txtHasOlvidadoTuContrasenya"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/has_olvidado_tu_constrasenya"
-            android:gravity="center"
-            android:textColor="#B0BEC5"
-            android:layout_marginTop="10dp">
-        </TextView>
     </LinearLayout>
 
 

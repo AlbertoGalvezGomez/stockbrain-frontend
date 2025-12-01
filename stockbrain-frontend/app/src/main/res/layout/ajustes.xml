@@ -82,15 +82,6 @@
                     android:contentDescription="Editar perfil" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_change_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cambiar contraseña / PIN"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#00BCD4"
-                android:layout_marginTop="8dp" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

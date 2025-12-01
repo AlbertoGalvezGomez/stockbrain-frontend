@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -13,82 +14,88 @@
         app:titleTextColor="@color/black"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
+    <!-- Logo grande arriba -->
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/toolbar"
-        android:src="@drawable/stockbrain_logo">
-    </ImageView>
-
-    <LinearLayout
-        android:id="@+id/layout_rectangulo"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="400dp"
-        android:background="#B0BEC5">
-    </LinearLayout>
+        android:layout_below="@id/toolbar"
+        android:scaleType="centerCrop"
+        android:src="@drawable/stockbrain_logo" />
 
+    <!-- Card con bordes redondos (el fondo que ya tienes) -->
     <LinearLayout
-        android:id="@+id/layout_menu"
-        android:orientation="vertical"
+        android:id="@+id/card_editar"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:background="@drawable/fondo_bordes_redondos"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:layout_below="@+id/imgLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center|left">
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="5dp"
+            android:background="#673AB7"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cambia tu contraseña"
-            android:gravity="center"
-            android:textSize="20sp"
+            android:text="Edita tus datos"
+            android:textColor="#000000"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginTop="30dp">
-        </TextView>
+            android:gravity="center"
+            android:layout_marginBottom="30dp"/>
 
-        <EditText
-            android:id="@+id/editNombreUsuario"
+        <!-- Nombre de usuario -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:hint="Nombre de usuario"
-            android:minHeight="48dp" />
+            android:layout_marginBottom="16dp"
+            app:hintTextColor="#673AB7">
 
-        <EditText
-            android:id="@+id/editEmail"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editNombreUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de usuario"
+                android:inputType="textPersonName"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Contraseña (opcional) -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:hint="Email"
-            android:minHeight="48dp" />
+            android:layout_marginBottom="24dp"
+            app:hintTextColor="#673AB7"
+            app:passwordToggleEnabled="true">
 
-        <EditText
-            android:id="@+id/editContrasenya"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:hint="Nueva contraseña"
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editContrasenya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nueva contraseña"
+                android:inputType="textPassword"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnGuardarCambios"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar"
-            android:layout_gravity="center"
-            android:layout_marginTop="70dp">
-        </Button>
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="GUARDAR CAMBIOS"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#673AB7"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
+
 </RelativeLayout>

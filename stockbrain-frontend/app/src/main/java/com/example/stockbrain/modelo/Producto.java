@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import kotlin.jvm.Transient;
+
 public class Producto implements Parcelable {
 
     private Long id;
@@ -68,6 +70,12 @@ public class Producto implements Parcelable {
     public void setImagenRuta(String imagenRuta) {
         this.imagenRuta = imagenRuta;
     }
+
+    @Transient
+    private int cantidadVendidaTemp = 0;
+
+    public int getCantidadVendidaTemp() { return cantidadVendidaTemp; }
+    public void setCantidadVendidaTemp(int cantidadVendidaTemp) { this.cantidadVendidaTemp = cantidadVendidaTemp; }
 
 
     protected Producto(Parcel in) {

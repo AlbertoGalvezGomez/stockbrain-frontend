@@ -15,7 +15,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
+import com.example.stockbrain.logica.home.Home;
 import com.example.stockbrain.logica.home.HomeEditarProducto;
+import com.example.stockbrain.modelo.SessionManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,21 +28,21 @@ public class Ajustes extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView tvUsername, tvUserEmail;
     private ImageButton btnEditProfile;
-    private Button btnChangePassword;
     private Switch switchPush;
     private Button btnFaq, btnSoporte, btnDeleteAccount;
-    private ImageButton btnHome, btnSettings, btnLogout, btnMore;
+    private ImageButton btnHome, btnLogout, btnMore;
     private boolean isDeleting = false;
+    private SessionManager sessionManager;
 
     private static final String EMAIL_SOPORTE = "agalgom316@g.educaand.com";
     private static final String TELEFONO_SOPORTE = "34642330037";
-
-    private static final String PREFS_NAME = "settings_prefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajustes);
+
+        sessionManager = new SessionManager(this);
 
         initViews();
         setupToolbar();
@@ -53,13 +55,11 @@ public class Ajustes extends AppCompatActivity {
         tvUsername = findViewById(R.id.tv_username);
         tvUserEmail = findViewById(R.id.tv_user_email);
         btnEditProfile = findViewById(R.id.btn_edit_profile);
-        btnChangePassword = findViewById(R.id.btn_change_password);
         switchPush = findViewById(R.id.switch_push);
         btnFaq = findViewById(R.id.btn_faq);
         btnSoporte = findViewById(R.id.btnSoporte);
         btnDeleteAccount = findViewById(R.id.btn_delete_account);
         btnHome = findViewById(R.id.inicio);
-        btnSettings = findViewById(R.id.ajustes);
         btnLogout = findViewById(R.id.logout);
         btnMore = findViewById(R.id.more);
     }
@@ -76,6 +76,13 @@ public class Ajustes extends AppCompatActivity {
         btnFaq.setOnClickListener(v -> startActivity(new Intent(this, Faq.class)));
         btnSoporte.setOnClickListener(v -> mostrarSoporte());
         btnDeleteAccount.setOnClickListener(v -> mostrarDialogoConfirmacionEliminarCuenta());
+        btnEditProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(Ajustes.this, EditarPerfil.class);
+            startActivityForResult(intent, 100);
+        });
+        btnHome.setOnClickListener(v -> startActivity(new Intent(this, Home.class)));
+        btnLogout.setOnClickListener(v -> confirmarLogout());
+        btnMore.setOnClickListener(this::mostrarPopupMenu);
     }
 
     private void mostrarDialogoConfirmacionEliminarCuenta() {
@@ -111,6 +118,14 @@ public class Ajustes extends AppCompatActivity {
                 .setNegativeButton("Cancelar", null)
                 .setCancelable(true)
                 .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            loadUserData();
+        }
     }
 
     private void eliminarCuentaDefinitivamente() {
@@ -175,6 +190,36 @@ public class Ajustes extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finishAffinity();
+    }
+
+    private void confirmarLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de que quieres cerrar sesión?")
+                .setPositiveButton("Sí", (d, w) -> sessionManager.logout(this))
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void mostrarPopupMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_redes_more, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
+            else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
+            else if (id == R.id.action_feedback) abrirEmail();
+            return true;
+        });
+        popup.show();
+    }
+
+    private void abrirUrl(String url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al abrir enlace", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadUserData() {

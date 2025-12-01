@@ -5,6 +5,8 @@ import com.example.stockbrain.modelo.Producto;
 import com.example.stockbrain.modelo.TiendaRequest;
 import com.example.stockbrain.modelo.Tienda;
 import com.example.stockbrain.modelo.Usuario;
+import com.example.stockbrain.modelo.UsuarioUpdateRequest;
+import com.example.stockbrain.modelo.VentaRequest;
 
 import java.util.List;
 
@@ -41,7 +43,7 @@ public interface ApiService {
     Call<Usuario> crearUsuario(@Body Usuario usuario);
 
     @PUT("usuarios/{id}")
-    Call<Usuario> actualizarUsuario(@Path("id") Long id, @Body Usuario usuario);
+    Call<Void> actualizarUsuario(@Path("id") Long id, @Body UsuarioUpdateRequest request);
 
     @GET("usuarios/{id}")
     Call<Usuario> getUsuario(@Path("id") Long id);
@@ -79,4 +81,12 @@ public interface ApiService {
 
     @DELETE("productos/{id}")
     Call<Void> eliminarProducto(@Path("id") Long id);
+
+
+    @GET("productos/tienda")
+    Call<List<Producto>> getProductosDeMiTienda();
+
+    @POST("ventas")
+    Call<Void> crearVenta(@Body VentaRequest ventaRequest);
+
 }

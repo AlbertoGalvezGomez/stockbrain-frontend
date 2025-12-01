@@ -31,7 +31,7 @@ public class HomeListaProductos extends AppCompatActivity {
     private ProductoAdapter productoAdapter;
     private SessionManager sessionManager;
 
-    private static final int REQUEST_EDITAR_PRODUCTO = 100; // código para onActivityResult
+    private static final int REQUEST_EDITAR_PRODUCTO = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

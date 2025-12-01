@@ -30,7 +30,7 @@ public class SessionManager {
     }
 
     public String getEmail() {
-        return prefs.getString("user_email", "");
+        return prefs.getString("user_email", "email@ejemplo.com");
     }
 
     public String getRol() {
