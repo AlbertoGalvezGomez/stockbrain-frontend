@@ -82,7 +82,7 @@ public class InicioSesion extends AppCompatActivity {
 
                     Intent intent = "ADMIN".equalsIgnoreCase(usuario.getRol())
                             ? new Intent(InicioSesion.this, Home.class)
-                            : new Intent(InicioSesion.this, ListaTiendas.class);
+                            : new Intent(InicioSesion.this, ListaTiendasUsuarios.class);
 
                     startActivity(intent);
                     finish();

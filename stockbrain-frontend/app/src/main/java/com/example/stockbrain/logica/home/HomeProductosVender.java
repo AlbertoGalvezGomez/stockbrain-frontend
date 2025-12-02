@@ -73,7 +73,6 @@ public class HomeProductosVender extends AppCompatActivity {
     private void cargarProductos() {
         progressBar.setVisibility(View.VISIBLE);
 
-        // Leer el tienda_id del usuario logueado (el mismo que usas en VentasActivity)
         SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
         long tiendaId = prefs.getLong("tienda_id", 0L);
 

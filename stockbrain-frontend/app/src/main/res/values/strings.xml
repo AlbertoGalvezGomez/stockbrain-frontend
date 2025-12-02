@@ -2,5 +2,10 @@
     <string name="app_name">StockBrain</string>
     <string name="has_olvidado_tu_constrasenya"><u>¿Has olvidado tu constraseña?</u></string>
     <string name="no_tienes_una_cuenta_registrate">¿No tienes una cuenta? <u>Regístrate</u></string>
-    <string name="agregar_producto_nuevo">1. Ve a la pestaña \'Inventario\'\n2. Pulsa el botón flotante \'+\' (abajo a la derecha)\n3. Rellena nombre, cantidad, precio, categoría y fecha de caducidad (opcional)\n4. Pulsa \'Guardar\'</string>
+    <string name="agregar_producto_nuevo">1. Ve a la pestaña \'Crear productos\'\n2. Pulsa el botón
+        flotante \'+\'\n3. Rellena nombre, descripción, stock, precio y establece una imagen (opcional)\n4. Pulsa \'Guardar\'</string>
+    <string name="faq_como_editar_producto">Ve a \'Lista productos\' y pulsa en el botón editar
+        con forma de lápiz. Actualiza los datos que quieras cambiar del producto.</string>
+    <string name="faq_eliminar_producto">Ve a Lista productos y pulsa en el botón editar con forma de lápiz. Pulsa \'Eliminar\'. Si eliminas un producto eliminarás las ventas que tenía relacionadas y sus notificaciones. Se creará una notificación de que el producto ha sido eliminado</string>
+    <string name="faq_registrar_venta">Ve a Gestión de ventas, al entrar pulsa en la lupa situada arriba a la derecha y selecciona el producto que hayas vendido clicando sobre él. Después establece la cantidad que hayas vendido y pulsa en realizar venta.</string>
 </resources>

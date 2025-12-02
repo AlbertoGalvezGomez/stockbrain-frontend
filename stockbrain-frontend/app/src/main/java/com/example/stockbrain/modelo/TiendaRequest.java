@@ -6,7 +6,7 @@ public class TiendaRequest {
     private String nombre;
     private String ubicacion;
 
-    @SerializedName("administradorId")  // ← importante: coincide con backend
+    @SerializedName("administradorId")
     private Long administradorId;
 
     public TiendaRequest(String nombre, String ubicacion, Long adminId) {
@@ -15,7 +15,6 @@ public class TiendaRequest {
         this.administradorId = adminId;
     }
 
-    // Getters y setters
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     public String getUbicacion() { return ubicacion; }

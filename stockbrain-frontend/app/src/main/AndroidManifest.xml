@@ -51,7 +51,7 @@
             android:parentActivityName=".logica.MainActivity">
         </activity>
 
-        <activity android:name=".logica.ListaTiendas"
+        <activity android:name=".logica.ListaTiendasUsuarios"
             android:exported="true"
             android:parentActivityName=".logica.MainActivity">
         </activity>

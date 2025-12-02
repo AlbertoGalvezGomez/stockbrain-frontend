@@ -173,7 +173,7 @@ public class Home extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
             else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
-            else if (id == R.id.action_feedback) abrirEmail();
+            else if (id == R.id.action_compartir) abrirEmail();
             return true;
         });
         popup.show();

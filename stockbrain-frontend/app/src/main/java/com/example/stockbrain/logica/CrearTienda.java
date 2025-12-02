@@ -99,7 +99,6 @@ public class CrearTienda extends AppCompatActivity {
                     irAlHome();
 
                 } else {
-                    // Mensajes más claros según el código HTTP
                     String mensaje;
                     switch (response.code()) {
                         case 400:
@@ -137,7 +136,4 @@ public class CrearTienda extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-    // ELIMINA COMPLETAMENTE ESTE MÉTODO → YA NO SE USA NUNCA
-    // private void asignarTiendaAlUsuario(...) { ... }
 }

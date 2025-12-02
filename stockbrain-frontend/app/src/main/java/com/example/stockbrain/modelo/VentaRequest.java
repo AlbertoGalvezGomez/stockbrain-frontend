@@ -7,7 +7,7 @@ public class VentaRequest {
     private int cantidad;
 
     @SerializedName("fecha")
-    private String fecha; // puede ser null → backend pone hoy
+    private String fecha;
 
     @SerializedName("producto")
     private Producto producto;

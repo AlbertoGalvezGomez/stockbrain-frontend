@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@drawable/gradient">
 
-    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         android:title="Centro de Ayuda"
         app:titleTextColor="@color/black" />
 
-    <!-- Contenido desplazable -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,7 +51,6 @@
 
             </LinearLayout>
 
-            <!-- FAQ Item 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +61,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cómo edito o elimino un producto?"
+                    android:text="¿Cómo edito un producto?"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
@@ -73,13 +70,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="• Para editar: mantén pulsado el producto → 'Editar'\n• Para eliminar: mantén pulsado → 'Eliminar' → confirma"
+                    android:text="@string/faq_como_editar_producto"
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
             </LinearLayout>
 
-            <!-- FAQ Item 3 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +87,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Qué significa 'stock bajo'?"
+                    android:text="¿Cómo elimino un producto?"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
@@ -99,33 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Se activa cuando un producto tiene menos de 5 unidades (configurable en Ajustes). Recibirás una alerta si tienes activada la notificación."
-                    android:textSize="14sp"
-                    android:textColor="#B0BEC5" />
-
-            </LinearLayout>
-
-            <!-- FAQ Item 4 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="12dp"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Puedo escanear códigos de barras?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Sí. En la pantalla de agregar producto, pulsa el ícono de cámara para escanear el código. Se autocompletarán nombre y datos si está en nuestra base."
+                    android:text="@string/faq_eliminar_producto"
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
@@ -142,7 +113,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cómo hago una copia de seguridad?"
+                    android:text="¿Cómo registro una venta?"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
@@ -151,13 +122,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Ve a Ajustes → 'Copia de seguridad' → 'Hacer copia ahora'. Se guarda en Google Drive o localmente."
+                    android:text="@string/faq_registrar_venta"
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
             </LinearLayout>
 
-            <!-- FAQ Item 6 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,7 +138,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Se sincroniza entre dispositivos?"
+                    android:text="¿Puedo consultar las acciones realizadas?"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
@@ -177,7 +147,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Sí, si inicias sesión con la misma cuenta. Los datos se sincronizan en la nube cada 15 minutos o al abrir la app."
+                    android:text="Sí, si consultas el apartado Alertas y notificaciones,
+                    te aparecerán todos los cambios relacionados con tus productos."
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
@@ -229,13 +200,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Se borrarán todos tus datos de forma permanente. Asegúrate de hacer una copia de seguridad antes."
+                    android:text="Se borrarán todos tus datos de forma permanente."
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
             </LinearLayout>
 
-            <!-- FAQ Item 9 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,7 +231,6 @@
 
             </LinearLayout>
 
-            <!-- FAQ Item 10 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -281,7 +250,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="En Ajustes → 'Contactar soporte'. Incluye una captura si es un error."
+                    android:text="En la sección Soporte se te ofrecen todas las formas de contacto."
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 

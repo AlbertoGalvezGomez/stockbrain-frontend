@@ -1,10 +1,8 @@
 package com.example.stockbrain.logica;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -16,7 +14,6 @@ import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
 import com.example.stockbrain.logica.home.Home;
-import com.example.stockbrain.logica.home.HomeEditarProducto;
 import com.example.stockbrain.modelo.SessionManager;
 
 import retrofit2.Call;
@@ -28,7 +25,6 @@ public class Ajustes extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView tvUsername, tvUserEmail;
     private ImageButton btnEditProfile;
-    private Switch switchPush;
     private Button btnFaq, btnSoporte, btnDeleteAccount;
     private ImageButton btnHome, btnLogout, btnMore;
     private boolean isDeleting = false;
@@ -55,7 +51,6 @@ public class Ajustes extends AppCompatActivity {
         tvUsername = findViewById(R.id.tv_username);
         tvUserEmail = findViewById(R.id.tv_user_email);
         btnEditProfile = findViewById(R.id.btn_edit_profile);
-        switchPush = findViewById(R.id.switch_push);
         btnFaq = findViewById(R.id.btn_faq);
         btnSoporte = findViewById(R.id.btnSoporte);
         btnDeleteAccount = findViewById(R.id.btn_delete_account);
@@ -84,7 +79,7 @@ public class Ajustes extends AppCompatActivity {
             if (sessionManager.getRol().equalsIgnoreCase("ADMIN")) {
                 startActivity(new Intent(this, Home.class));
             } else {
-                startActivity(new Intent(this, ListaTiendas.class));
+                startActivity(new Intent(this, ListaTiendasUsuarios.class));
             }
         });
         btnLogout.setOnClickListener(v -> confirmarLogout());
@@ -214,7 +209,7 @@ public class Ajustes extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
             else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
-            else if (id == R.id.action_feedback) abrirEmail();
+            else if (id == R.id.action_compartir) abrirEmailCompartir();
             return true;
         });
         popup.show();
@@ -242,7 +237,7 @@ public class Ajustes extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Soporte")
                 .setItems(opciones, (d, w) -> {
-                    if (w == 0) abrirEmail();
+                    if (w == 0) abrirEmailSoporte();
                     else mostrarOpcionesContacto();
                 })
                 .setNegativeButton("Cancelar", null)
@@ -261,12 +256,23 @@ public class Ajustes extends AppCompatActivity {
                 .show();
     }
 
-    private void abrirEmail() {
+    private void abrirEmailSoporte() {
         Intent i = new Intent(Intent.ACTION_SEND).setType("message/rfc822")
                 .putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE})
                 .putExtra(Intent.EXTRA_SUBJECT, "Soporte StockBrain")
-                .putExtra(Intent.EXTRA_TEXT, "Hola,\n\nNecesito ayuda con...\n\nDispositivo: " + Build.MODEL +
-                        "\nAndroid: " + Build.VERSION.RELEASE);
+                .putExtra(Intent.EXTRA_TEXT, "Necesito ayuda con la app StockBrain...");
+        try {
+            startActivity(Intent.createChooser(i, "Enviar correo"));
+        } catch (Exception e) {
+            Toast.makeText(this, "No hay app de correo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void abrirEmailCompartir() {
+        Intent i = new Intent(Intent.ACTION_SEND).setType("message/rfc822")
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE})
+                .putExtra(Intent.EXTRA_SUBJECT, "Soporte StockBrain")
+                .putExtra(Intent.EXTRA_TEXT, "¡Mira esta app de gestión de inventario! StockBrain");
         try {
             startActivity(Intent.createChooser(i, "Enviar correo"));
         } catch (Exception e) {

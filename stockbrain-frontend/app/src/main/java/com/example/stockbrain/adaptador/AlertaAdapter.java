@@ -62,19 +62,19 @@ public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder
         switch (a.getTipo()) {
             case "VENTA_REALIZADA":
                 icono = R.drawable.ic_venta;
-                colorFondo = Color.parseColor("#4CAF50"); // verde
+                colorFondo = Color.parseColor("#4CAF50");
                 break;
             case "NUEVO_PRODUCTO":
                 icono = R.drawable.ic_nuevo;
-                colorFondo = Color.parseColor("#2196F3"); // azul
+                colorFondo = Color.parseColor("#2196F3");
                 break;
             case "PRODUCTO_EDITADO":
                 icono = R.drawable.ic_editar;
-                colorFondo = Color.parseColor("#FF9800"); // naranja
+                colorFondo = Color.parseColor("#FF9800");
                 break;
             case "PRODUCTO_ELIMINADO":
                 icono = R.drawable.ic_eliminar;
-                colorFondo = Color.parseColor("#F44336"); // rojo
+                colorFondo = Color.parseColor("#F44336");
                 break;
         }
 
@@ -83,7 +83,7 @@ public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder
         h.tvTitulo.setText(titulo);
         h.tvMensaje.setText(a.getMensaje());
 
-        // Fecha bonita: Hoy / Ayer / yyyy-MM-dd
+        // Formato fecha
         String fechaRaw = a.getFecha().substring(0, 10);
         String hoy = LocalDate.now().toString();
         String ayer = LocalDate.now().minusDays(1).toString();

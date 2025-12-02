@@ -122,7 +122,7 @@ public class RegistroUsuarios extends AppCompatActivity {
 
                     Intent intent = rolBackend.equals("ADMIN")
                             ? new Intent(RegistroUsuarios.this, CrearTienda.class)
-                            : new Intent(RegistroUsuarios.this, ListaTiendas.class);
+                            : new Intent(RegistroUsuarios.this, ListaTiendasUsuarios.class);
 
                     startActivity(intent);
                     finish();

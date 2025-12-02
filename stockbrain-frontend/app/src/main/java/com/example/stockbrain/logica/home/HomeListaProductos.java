@@ -26,7 +26,6 @@ import java.util.List;
 
 public class HomeListaProductos extends AppCompatActivity {
 
-    private static final String TAG = "ListaProductosTienda";
     private RecyclerView recyclerViewProductos;
     private ProductoAdapter productoAdapter;
     private SessionManager sessionManager;
