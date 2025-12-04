@@ -128,9 +128,11 @@ public class RegistroUsuarios extends AppCompatActivity {
                     finish();
 
                 } else {
-                    String msg = response.code() == 400 ? "Email ya registrado" :
-                            response.code() == 500 ? "Error del servidor" : "Error al registrarse";
-                    Toast.makeText(RegistroUsuarios.this, msg, Toast.LENGTH_LONG).show();
+                    if (response.code() == 400) {
+                        Toast.makeText(RegistroUsuarios.this, "Este correo ya está registrado", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RegistroUsuarios.this, "Este correo ya está registrado", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 

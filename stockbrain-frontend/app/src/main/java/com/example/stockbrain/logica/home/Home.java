@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
 
     private TextView txtNombreTienda;
     private ImageButton btnInventario, btnListaProductos, btnSoporte, btnMore, btnAjustes,
-            btnLogout, btnVentas, btnAlertas;
+            btnLogout, btnVentas, btnAlertas, btnDashboard;
 
     private SessionManager sessionManager;
 
@@ -77,6 +77,7 @@ public class Home extends AppCompatActivity {
         btnLogout = findViewById(R.id.logout);
         btnVentas = findViewById(R.id.gestion_de_ventas);
         btnAlertas = findViewById(R.id.alertas_notificaciones);
+        btnDashboard = findViewById(R.id.btn_dashboard);
     }
 
     private void configurarClicks() {
@@ -88,6 +89,7 @@ public class Home extends AppCompatActivity {
         btnLogout.setOnClickListener(v -> confirmarLogout());
         btnVentas.setOnClickListener(v -> startActivity(new Intent(this, HomeVentas.class)));
         btnAlertas.setOnClickListener(v -> startActivity(new Intent(this, HomeAlertas.class)));
+        btnDashboard.setOnClickListener(v -> startActivity(new Intent(this, HomeDashboard.class)));
     }
 
     private void confirmarLogout() {
@@ -109,7 +111,7 @@ public class Home extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Soporte")
                 .setItems(opciones, (d, w) -> {
-                    if (w == 0) abrirEmail();
+                    if (w == 0) abrirEmailSoporte();
                     else mostrarOpcionesContacto();
                 })
                 .setNegativeButton("Cancelar", null)
@@ -128,12 +130,23 @@ public class Home extends AppCompatActivity {
                 .show();
     }
 
-    private void abrirEmail() {
+    private void abrirEmailSoporte() {
         Intent i = new Intent(Intent.ACTION_SEND).setType("message/rfc822")
                 .putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE})
                 .putExtra(Intent.EXTRA_SUBJECT, "Soporte StockBrain")
-                .putExtra(Intent.EXTRA_TEXT, "Hola,\n\nNecesito ayuda con...\n\nDispositivo: " + Build.MODEL +
-                        "\nAndroid: " + Build.VERSION.RELEASE);
+                .putExtra(Intent.EXTRA_TEXT, "Necesito ayuda con la app StockBrain...");
+        try {
+            startActivity(Intent.createChooser(i, "Enviar correo"));
+        } catch (Exception e) {
+            Toast.makeText(this, "No hay app de correo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void abrirEmailCompartir() {
+        Intent i = new Intent(Intent.ACTION_SEND).setType("message/rfc822")
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_SOPORTE})
+                .putExtra(Intent.EXTRA_SUBJECT, "Soporte StockBrain")
+                .putExtra(Intent.EXTRA_TEXT, "¡Mira esta app de gestión de inventario! StockBrain");
         try {
             startActivity(Intent.createChooser(i, "Enviar correo"));
         } catch (Exception e) {
@@ -173,7 +186,7 @@ public class Home extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.action_github) abrirUrl("https://github.com/AlbertoGalvezGomez");
             else if (id == R.id.action_twitter) abrirUrl("https://x.com/AlbertoGlv57501");
-            else if (id == R.id.action_compartir) abrirEmail();
+            else if (id == R.id.action_compartir) abrirEmailCompartir();
             return true;
         });
         popup.show();

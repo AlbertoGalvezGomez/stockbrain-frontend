@@ -89,7 +89,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Botón vender -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnVender"
                 android:layout_width="match_parent"
@@ -104,7 +103,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- FAB para buscar producto -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabBuscarProducto"
         android:layout_width="wrap_content"

@@ -43,7 +43,7 @@
                 android:id="@+id/tvPrecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precio: $0.00"
+                android:text="Precio: €0.00"
                 android:textColor="#2E7D32"
                 android:layout_marginTop="4dp"/>
 

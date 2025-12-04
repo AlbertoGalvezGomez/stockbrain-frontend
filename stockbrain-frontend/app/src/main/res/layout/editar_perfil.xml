@@ -14,7 +14,7 @@
         app:titleTextColor="@color/black"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <!-- Logo grande arriba -->
+
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="match_parent"
@@ -23,7 +23,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/stockbrain_logo" />
 
-    <!-- Card con bordes redondos (el fondo que ya tienes) -->
     <LinearLayout
         android:id="@+id/card_editar"
         android:layout_width="340dp"
@@ -33,13 +32,6 @@
         android:elevation="12dp"
         android:orientation="vertical"
         android:padding="32dp">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="5dp"
-            android:background="#673AB7"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -90,7 +82,7 @@
             android:id="@+id/btnGuardarCambios"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="GUARDAR CAMBIOS"
+            android:text="Guardar cambios"
             android:textSize="16sp"
             android:textStyle="bold"
             android:backgroundTint="#673AB7"

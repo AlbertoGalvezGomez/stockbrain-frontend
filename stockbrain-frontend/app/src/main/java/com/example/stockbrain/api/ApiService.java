@@ -1,6 +1,7 @@
 package com.example.stockbrain.api;
 
 import com.example.stockbrain.modelo.Alerta;
+import com.example.stockbrain.modelo.DashboardResponse;
 import com.example.stockbrain.modelo.UsuarioRequest;
 import com.example.stockbrain.modelo.Producto;
 import com.example.stockbrain.modelo.TiendaRequest;
@@ -92,5 +93,9 @@ public interface ApiService {
 
     @GET("alertas/tienda/{tiendaId}")
     Call<List<Alerta>> obtenerAlertas(@Path("tiendaId") Long tiendaId);
+
+    @GET("api/dashboard/tienda/{tiendaId}")
+    Call<DashboardResponse> getDashboard(@Path("tiendaId") Long tiendaId);
+
 
 }

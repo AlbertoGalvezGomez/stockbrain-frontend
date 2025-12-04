@@ -174,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Sí. Ve a 'Inventario' → menú (tres puntos) → 'Exportar a CSV'. Se guarda en Descargas."
+                    android:text="No, no es posible exportar tu inventario a Excel."
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 
@@ -201,31 +201,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Se borrarán todos tus datos de forma permanente."
-                    android:textSize="14sp"
-                    android:textColor="#B0BEC5" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="12dp"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Hay versión para tablet o web?"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="La versión para tablet está optimizada. La versión web está en desarrollo y llegará en 2026."
                     android:textSize="14sp"
                     android:textColor="#B0BEC5" />
 

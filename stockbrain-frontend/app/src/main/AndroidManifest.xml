@@ -102,5 +102,10 @@
             android:parentActivityName=".logica.MainActivity">
         </activity>
 
+        <activity android:name=".logica.home.HomeDashboard"
+            android:exported="true"
+            android:parentActivityName=".logica.MainActivity">
+        </activity>
+
     </application>
 </manifest>
