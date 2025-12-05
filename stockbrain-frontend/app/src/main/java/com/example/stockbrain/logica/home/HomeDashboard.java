@@ -1,15 +1,12 @@
 package com.example.stockbrain.logica.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.stockbrain.R;
 import com.example.stockbrain.api.ApiClient;

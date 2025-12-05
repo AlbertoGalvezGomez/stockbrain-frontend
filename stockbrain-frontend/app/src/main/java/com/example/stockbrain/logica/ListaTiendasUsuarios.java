@@ -28,8 +28,6 @@ import java.util.List;
 
 public class ListaTiendasUsuarios extends AppCompatActivity {
 
-    private static final String TAG = "ListaTiendas";
-
     private RecyclerView recyclerViewTiendas;
     private TiendaAdapter tiendaAdapter;
     private SessionManager sessionManager;
@@ -72,6 +70,13 @@ public class ListaTiendasUsuarios extends AppCompatActivity {
         recyclerViewTiendas.setLayoutManager(new LinearLayoutManager(this));
         tiendaAdapter = new TiendaAdapter(new ArrayList<>());
         recyclerViewTiendas.setAdapter(tiendaAdapter);
+
+        tiendaAdapter.setOnTiendaClickListener(tienda -> {
+            Intent intent = new Intent(ListaTiendasUsuarios.this, ListaProductosUsuario.class);
+            intent.putExtra("tiendaId", tienda.getId());
+            intent.putExtra("nombreTienda", tienda.getNombre());
+            startActivity(intent);
+        });
 
         cargarTiendas(userId);
         inicializarVistas();

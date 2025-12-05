@@ -29,9 +29,6 @@ public interface ApiService {
     @GET("productos")
     Call<List<Producto>> getProductos();
 
-    @POST("productos")
-    Call<Producto> crearProducto(@Body Producto producto);
-
     @POST("tiendas")
     Call<Tienda> crearTienda(@Body TiendaRequest request);
 
@@ -47,14 +44,8 @@ public interface ApiService {
     @PUT("usuarios/{id}")
     Call<Void> actualizarUsuario(@Path("id") Long id, @Body UsuarioUpdateRequest request);
 
-    @GET("usuarios/{id}")
-    Call<Usuario> getUsuario(@Path("id") Long id);
-
     @DELETE("usuarios/{id}")
     Call<Void> eliminarUsuario(@Path("id") Long id);
-
-    @GET("tiendas/usuario/{userId}")
-    Call<Tienda> obtenerTiendaDeUsuario(@Path("userId") Long userId);
 
     @Multipart
     @POST("productos")
@@ -83,10 +74,6 @@ public interface ApiService {
 
     @DELETE("productos/{id}")
     Call<Void> eliminarProducto(@Path("id") Long id);
-
-
-    @GET("productos/tienda")
-    Call<List<Producto>> getProductosDeMiTienda();
 
     @POST("ventas")
     Call<Void> crearVenta(@Body VentaRequest ventaRequest);

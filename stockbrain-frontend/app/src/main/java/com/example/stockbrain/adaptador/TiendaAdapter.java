@@ -4,18 +4,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.stockbrain.R;
 import com.example.stockbrain.modelo.Tienda;
+
 import java.util.List;
 
 public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.TiendaViewHolder> {
 
     private List<Tienda> tiendas;
+    private OnTiendaClickListener listener;
 
     public TiendaAdapter(List<Tienda> tiendas) {
         this.tiendas = tiendas;
+    }
+
+    public interface OnTiendaClickListener {
+        void onTiendaClick(Tienda tienda);
+    }
+
+    public void setOnTiendaClickListener(OnTiendaClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,6 +43,12 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.TiendaView
         Tienda tienda = tiendas.get(position);
         holder.textNombreTienda.setText(tienda.getNombre());
         holder.textUbicacionTienda.setText(tienda.getUbicacion());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onTiendaClick(tienda);
+            }
+        });
     }
 
     @Override

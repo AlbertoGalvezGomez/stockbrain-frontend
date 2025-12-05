@@ -2,8 +2,6 @@ package com.example.stockbrain.logica.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.stockbrain.R;
-import com.example.stockbrain.adaptador.ProductoAdapter;  // ← Crea este adapter si no existe
+import com.example.stockbrain.adaptador.ProductoAdapterAdmin;
 import com.example.stockbrain.api.ApiClient;
 import com.example.stockbrain.api.ApiService;
 import com.example.stockbrain.logica.InicioSesion;
@@ -21,13 +19,13 @@ import com.example.stockbrain.modelo.SessionManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class HomeListaProductos extends AppCompatActivity {
 
     private RecyclerView recyclerViewProductos;
-    private ProductoAdapter productoAdapter;
+    private ProductoAdapterAdmin productoAdapter;
     private SessionManager sessionManager;
 
     private static final int REQUEST_EDITAR_PRODUCTO = 100;
@@ -55,7 +53,7 @@ public class HomeListaProductos extends AppCompatActivity {
         recyclerViewProductos.setLayoutManager(new LinearLayoutManager(this));
 
 
-        productoAdapter = new ProductoAdapter();
+        productoAdapter = new ProductoAdapterAdmin();
         recyclerViewProductos.setAdapter(productoAdapter);
 
         productoAdapter.setOnEditarClickListener(producto -> {
