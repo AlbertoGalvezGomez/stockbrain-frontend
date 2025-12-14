@@ -211,9 +211,16 @@ public class HomeCrearProductos extends AppCompatActivity {
         editStock.setText("");
         editPrecio.setText("");
         editDescripcion.setText("");
+
+        editNombre.setHint("Nombre");
+        editStock.setHint("Stock");
+        editPrecio.setHint("Precio");
+        editDescripcion.setHint("Descripción");
+
         imgPreview.setImageResource(R.drawable.hide_image);
         imagenUri = null;
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

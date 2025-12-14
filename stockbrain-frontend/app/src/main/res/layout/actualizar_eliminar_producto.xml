@@ -23,8 +23,8 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_personalizado"
         android:ems="10"
-        android:inputType="text"
-        android:text="Nombre"
+        android:inputType="textPersonName"
+        android:hint="Nombre"
         android:textColor="#B0BEC5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -38,7 +38,7 @@
         android:background="@drawable/edit_personalizado"
         android:ems="10"
         android:inputType="numberSigned"
-        android:text="Stock"
+        android:hint="Stock"
         android:textColor="#B0BEC5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editDescripcion" />
@@ -52,7 +52,7 @@
         android:background="@drawable/edit_personalizado"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="Precio"
+        android:hint="Precio"
         android:textColor="#B0BEC5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editStock" />
@@ -65,8 +65,9 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_personalizado"
         android:ems="10"
-        android:inputType="text"
-        android:text="Descripción"
+        android:maxLength="150"
+        android:inputType="textMultiLine"
+        android:hint="Descripción"
         android:textColor="#B0BEC5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editNombre" />

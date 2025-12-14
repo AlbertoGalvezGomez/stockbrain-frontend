@@ -62,9 +62,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_personalizado"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="Nombre"
+            android:hint="Nombre"
             android:textColor="#B0BEC5" />
 
         <EditText
@@ -76,7 +76,7 @@
             android:ems="10"
             android:inputType="numberSigned"
             android:minHeight="48dp"
-            android:text="Stock"
+            android:hint="Stock"
             android:textColor="#B0BEC5" />
 
         <EditText
@@ -88,7 +88,7 @@
             android:ems="10"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
-            android:text="Precio"
+            android:hint="Precio"
             android:textColor="#B0BEC5" />
 
         <EditText
@@ -98,9 +98,10 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_personalizado"
             android:ems="10"
-            android:inputType="text"
+            android:maxLength="150"
             android:minHeight="48dp"
-            android:text="Descripción"
+            android:hint="Descripción"
+            android:inputType="textMultiLine"
             android:textColor="#B0BEC5" />
 
         <TextView
@@ -141,7 +142,7 @@
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="5dp"
             android:text="Guardar" />
     </LinearLayout>
 </LinearLayout>

@@ -19,10 +19,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder> {
+
     private List<Alerta> lista = new ArrayList<>();
+    private List<Alerta> listaOriginal = new ArrayList<>();
 
     public void setLista(List<Alerta> lista) {
-        this.lista = lista;
+        listaOriginal = lista;
+        this.lista = new ArrayList<>(lista);
+        notifyDataSetChanged();
+    }
+
+    public void filtrarPorTipo(String tipo) {
+        lista.clear();
+
+        if (tipo.equals("TODAS")) {
+            lista.addAll(listaOriginal);
+        } else {
+            for (Alerta a : listaOriginal) {
+                if (tipo.equals(a.getTipo())) {
+                    lista.add(a);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -40,21 +58,11 @@ public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder
 
         String titulo;
         switch (a.getTipo()) {
-            case "VENTA_REALIZADA":
-                titulo = "Venta realizada";
-                break;
-            case "NUEVO_PRODUCTO":
-                titulo = "Producto nuevo";
-                break;
-            case "PRODUCTO_EDITADO":
-                titulo = "Producto editado";
-                break;
-            case "PRODUCTO_ELIMINADO":
-                titulo = "Producto eliminado";
-                break;
-            default:
-                titulo = "Actividad";
-                break;
+            case "VENTA_REALIZADA": titulo = "Venta realizada"; break;
+            case "NUEVO_PRODUCTO": titulo = "Producto nuevo"; break;
+            case "PRODUCTO_EDITADO": titulo = "Producto editado"; break;
+            case "PRODUCTO_ELIMINADO": titulo = "Producto eliminado"; break;
+            default: titulo = "Actividad"; break;
         }
 
         int icono = 0;
@@ -83,7 +91,6 @@ public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder
         h.tvTitulo.setText(titulo);
         h.tvMensaje.setText(a.getMensaje());
 
-        // Formato fecha
         String fechaRaw = a.getFecha().substring(0, 10);
         String hoy = LocalDate.now().toString();
         String ayer = LocalDate.now().minusDays(1).toString();
@@ -92,11 +99,15 @@ public class AlertaAdapter extends RecyclerView.Adapter<AlertaAdapter.ViewHolder
         h.tvFecha.setText(fechaMostrar);
     }
 
-    @Override public int getItemCount() { return lista.size(); }
+    @Override
+    public int getItemCount() {
+        return lista.size();
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivIcono;
         TextView tvTitulo, tvMensaje, tvFecha;
+
         ViewHolder(View v) {
             super(v);
             ivIcono = v.findViewById(R.id.ivIcono);

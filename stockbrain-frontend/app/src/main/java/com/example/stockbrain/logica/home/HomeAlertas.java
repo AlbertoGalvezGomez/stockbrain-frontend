@@ -3,7 +3,10 @@ package com.example.stockbrain.logica.home;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +50,7 @@ public class HomeAlertas extends AppCompatActivity {
         recycler = findViewById(R.id.recyclerAlertas);
         swipe = findViewById(R.id.swipeRefresh);
         progress = findViewById(R.id.progressBar);
+        Spinner spinnerFiltro = findViewById(R.id.spinnerFiltro);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AlertaAdapter();
@@ -55,9 +59,54 @@ public class HomeAlertas extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("data_login", MODE_PRIVATE);
         tiendaId = prefs.getLong("tienda_id", 1L);
 
+        configurarSpinner(spinnerFiltro);
         cargarAlertas();
 
         swipe.setOnRefreshListener(this::cargarAlertas);
+    }
+
+    private void configurarSpinner(Spinner spinner) {
+        String[] opciones = {
+                "Todas",
+                "Ventas",
+                "Nuevos",
+                "Editados",
+                "Eliminados"
+        };
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                opciones
+        );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        adapter.filtrarPorTipo("TODAS");
+                        break;
+                    case 1:
+                        adapter.filtrarPorTipo("VENTA_REALIZADA");
+                        break;
+                    case 2:
+                        adapter.filtrarPorTipo("NUEVO_PRODUCTO");
+                        break;
+                    case 3:
+                        adapter.filtrarPorTipo("PRODUCTO_EDITADO");
+                        break;
+                    case 4:
+                        adapter.filtrarPorTipo("PRODUCTO_ELIMINADO");
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     private void cargarAlertas() {

@@ -88,6 +88,11 @@ public class RegistroUsuarios extends AppCompatActivity {
             return;
         }
 
+        if (passwordUsuario.length() < 4) {
+            Toast.makeText(this, "La contraseña debe tener al menos 4 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (selectedRole == null) {
             Toast.makeText(this, "Selecciona si eres vendedor o cliente", Toast.LENGTH_SHORT).show();
             return;
@@ -129,9 +134,9 @@ public class RegistroUsuarios extends AppCompatActivity {
 
                 } else {
                     if (response.code() == 400) {
-                        Toast.makeText(RegistroUsuarios.this, "Este correo ya está registrado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistroUsuarios.this, "El formato del correo electrónico no es válido", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(RegistroUsuarios.this, "Este correo ya está registrado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistroUsuarios.this, "Este correo ya está registrado o el formato es incorrecto", Toast.LENGTH_LONG).show();
                     }
                 }
             }
